@@ -1,0 +1,40 @@
+---
+title: "Análise dos impactos de tempestades e eventos climáticos na economia americana"
+author: "Francisco Lima Figueiredo"
+date: "17/ABR/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Sinopse
+
+Eventos climáticos severos podem afetar a saúde e a economia de um pais ou população. Iremos aqui identificar os eventos mais prejudiciais em relação à saúde da população e aqueles com maiores consequências econômicas nos EUA.Esta análise é baseada em dados históricos sobre eventos climáticos severos nos EUA de 1950 à 2011, que estão disponíveis nos banco de dado de tempestade da National Oceanic and Atmospheric Administration (NOAA). Esses dados mostram o número de fatalidades e ferimentos em cada evento, bem como o dano econômico em plantações e propriedades. Consideramos aqui o efeito total de cada tipo de evento ao longo dos anos. Observamos que tornados acabaram sendo o evento que mais afetou a saúde humana, enquanto  inundações é o evento ligado ao maior dano econômico.
+
+
+## Obtendo e processando os dados brutos disponíveis
+
+Estão disponíveis os seguintes informações disponíveis
+
+* Dados brutos: (https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2);
+* Documentação: (https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf);
+* Perguntas Frequentes: (https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2FNCDC%20Storm%20Events-FAQ%20Page.pdf);
+
+Os eventos descritos no banco de dados começam no ano de 1950 e terminam em novembro de 2011. Nos primeiros anos do banco de dados, geralmente há menos eventos registrados, provavelmente devido à falta de bons registros. Em anos mais recentes devem ser considerados mais completos.
+
+```r
+# Carregando pacotes necessários
+if("data.table" %in% rownames(installed.packages()) == FALSE) {install.packages("data.table")}; library(data.table);
+if("lubridate" %in% rownames(installed.packages()) == FALSE) {install.packages("lubridate")}; library(lubridate);
+
+# Baixando e descompactando dados
+if(!dir.exists('data')){dir.create('data')}
+compress_file <- 'data/data.csv.bz2';
+download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2",compress_file)
+bunzip2 ("data.csv.bz2", overwrite=TRUE, remove=FALSE, destname="data/data-storm.csv") 
+unlink(compress_file)
+
+# Lendo dados originais no ambiente R
+original_data <- fread("data/data-storm.csv")
+```

@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/380641/78a3287571f04b1d906b86be92377dd6
+bundleId: https://api.rpubs.com/api/v1/document/380641/78a3287571f04b1d906b86be92377dd6
+url: http://rpubs.com/franfig/380641
+when: 1523966635.09783
